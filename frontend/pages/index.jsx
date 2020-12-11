@@ -19,15 +19,14 @@ export default function App() {
       <Row>
         <Col xs={12} md={5} style={{ marginBottom: '32px' }}>
           <Link href={URL_LIST.CONTACT_FORM}>
-            <Button variant="primary" size="lg" block variant="outline-primary">
+            <Button size="lg" block variant="outline-primary" style={{ height: '128px' }}>
               Contact Form
             </Button>
           </Link>
         </Col>
-        <Col md={2} />
-        <Col xs={12} md={5} style={{ marginBottom: '32px' }}>
+        <Col xs={12} md={{ span: 5, offset: 2 }} style={{ marginBottom: '32px' }}>
           <Link href={URL_LIST.ORDER_DETAIL}>
-            <Button variant="primary" size="lg" block variant="outline-primary">
+            <Button size="lg" block variant="outline-primary" style={{ height: '128px' }}>
               Where is my order?
             </Button>
           </Link>
