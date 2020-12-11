@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import { Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 
-import Search from '../assets/icons/search'
 import URL_LIST from '../pages/constants/url-list'
 import Layout from '../components/layout';
+import SearchBar from '../components/searchBar';
 
 export default function App() {
   return (
@@ -12,19 +12,8 @@ export default function App() {
         <h1>Help Center</h1>
       </Row>
       <Row>
-        <Col className="justify-content-sm-center" xs={12} md={12}>
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Text>
-                <Search />
-              </InputGroup.Text>
-            </InputGroup.Prepend>
-            <FormControl
-              placeholder="Search"
-              aria-label="Search"
-              aria-describedby="basic-addon1"
-            />
-          </InputGroup>
+        <Col className="justify-content-sm-center mb-3" xs={12} md={12}>
+          <SearchBar />
         </Col>
       </Row>
       <Row>
