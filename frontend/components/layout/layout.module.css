@@ -54,6 +54,7 @@
 }
 .headerContent {
     position: relative;
+    cursor: pointer;
 }
 .footerContactUs {
     height: 421px;
