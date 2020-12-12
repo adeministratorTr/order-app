@@ -12,7 +12,6 @@ export default function ContactForm() {
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation()
-      console.log('inside if')
       setIsFormValid(false)
     }
     setIsFormValid(true)
