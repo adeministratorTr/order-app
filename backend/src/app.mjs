@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import { redisClient } from './redis';
 import * as config from './config';
 
 const app = express();
@@ -15,6 +16,7 @@ app.get('/api/orders', (req, res) => {
 });
 
 app.post('/api/page-view', (req, res) => {
-  console.log('bonus -- store the page view data');
+  const page = req.body.path
+  redisClient.INCR(page)
   return res.send();
 });
