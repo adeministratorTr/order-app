@@ -16,7 +16,7 @@ app.get('/api/orders', (req, res) => {
 });
 
 app.post('/api/page-view', (req, res) => {
-  const page = req.body.path
+  const page = req.query.path
   redisClient.INCR(page)
   return res.send();
 });
