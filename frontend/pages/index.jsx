@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Row, Col, Button } from 'react-bootstrap';
 
-import URL_LIST from '../pages/constants/url-list'
+import { PAGE_URL_LIST } from '../constants/url-list'
 import Layout from '../components/layout';
 import SearchBar from '../components/searchBar';
 
@@ -18,14 +18,14 @@ export default function App() {
       </Row>
       <Row>
         <Col xs={12} md={5} style={{ marginBottom: '32px' }}>
-          <Link href={URL_LIST.CONTACT_FORM}>
+          <Link href={PAGE_URL_LIST.CONTACT_FORM}>
             <Button size="lg" block variant="outline-primary" style={{ height: '128px' }}>
               Contact Form
             </Button>
           </Link>
         </Col>
         <Col xs={12} md={{ span: 5, offset: 2 }} style={{ marginBottom: '32px' }}>
-          <Link href={URL_LIST.ORDER_DETAIL}>
+          <Link href={PAGE_URL_LIST.ORDER_DETAIL}>
             <Button size="lg" block variant="outline-primary" style={{ height: '128px' }}>
               Where is my order?
             </Button>
