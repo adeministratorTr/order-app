@@ -12,5 +12,6 @@
 
 # frontend
 /frontend/.next
+/frontend/coverage
 
 # backend
