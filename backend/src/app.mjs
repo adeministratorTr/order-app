@@ -20,3 +20,11 @@ app.post('/api/page-view', (req, res) => {
   redisClient.INCR(page)
   return res.send();
 });
+
+app.get('/api/page-views', async (req, res) => {
+  const page = req.query.path
+  const numberOfVisits = await redisClient.get(page)
+  return res.send({
+    numberOfVisits: numberOfVisits || 0
+  });
+});
