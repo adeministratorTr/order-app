@@ -19,7 +19,7 @@ export default function OrderDetail() {
   useEffect(() => {
     pageView(setPageFromUrl(PAGE_URL_LIST.ORDER_DETAIL))
     resetState()
-    fetchOrders
+    fetchOrders()
   }, [])
 
   const resetState = () => {
