@@ -1,11 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Col, Button } from 'react-bootstrap';
 
+import { pageView } from '../../services/page'
+import { setPageFromUrl } from '../../utils/url'
+import { PAGE_URL_LIST } from '../../constants/url-list'
 import Layout from '../../components/layout'
 import { formItem } from './contact-form.module.css'
 
 export default function ContactForm() {
   const [isFormValid, setIsFormValid] = useState(false)
+
+  useEffect(() => {
+    pageView(setPageFromUrl(PAGE_URL_LIST.CONTACT_FORM))
+  }, [])
 
   const handleFormSubmit = (e) => {
     e.preventDefault()

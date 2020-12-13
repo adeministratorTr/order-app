@@ -1,11 +1,19 @@
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { Row, Col, Button } from 'react-bootstrap';
 
+import { setPageFromUrl } from '../utils/url'
+import { pageView } from '../services/page'
 import { PAGE_URL_LIST } from '../constants/url-list'
 import Layout from '../components/layout';
 import SearchBar from '../components/searchBar';
 
 export default function App() {
+
+  useEffect(() => {
+    pageView(setPageFromUrl(PAGE_URL_LIST.INDEX))
+  }, [])
+
   return (
     <Layout>
       <Row className="justify-content-md-center" style={{ marginBottom: '32px' }}>

@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Row, Col, Button } from 'react-bootstrap'
 
+import { pageView } from '../../services/page'
 import { getOrders } from '../../services/order'
 import { getDate } from '../../utils/date'
+import { setPageFromUrl } from '../../utils/url'
+import { PAGE_URL_LIST } from '../../constants/url-list'
 import SearchBar from '../../components/searchBar'
 import Layout from '../../components/layout'
 import { orderDetailItem } from './order-detail.module.css'
@@ -14,9 +17,18 @@ export default function OrderDetail() {
   const [errorText, setErrorText] = useState('')
 
   useEffect(() => {
+    pageView(setPageFromUrl(PAGE_URL_LIST.ORDER_DETAIL))
+    resetState()
+    fetchOrders
+  }, [])
+
+  const resetState = () => {
     setSearchValue('')
     setOrder({})
     setErrorText('')
+  }
+
+  const fetchOrders = () => {
     getOrders() // TODO: discussable whether use global state management or not
       .then(resp => {
         resp.message
@@ -26,11 +38,10 @@ export default function OrderDetail() {
       .catch(error => {
         setErrorText(error)
       })
-  }, [])
+  }
 
   const setSearchedOrder = () => {
     const selectedOrder = initialOrders.find(item => item.reference === searchValue.toUpperCase().trim())
-    console.log('selectedOrder.date: ', selectedOrder.date)
     if (selectedOrder) {
       setOrder(selectedOrder)
       setErrorText('')
