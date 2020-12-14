@@ -1,0 +1,20 @@
+version: '3'
+services:
+
+  faq-app-backend:
+    container_name: faq-app-backend
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    ports:
+      - 3001:3001
+    
+  faq-app-frontend:
+    container_name: faq-app-frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - 12000:3000
+    links:
+      - faq-app-backend
