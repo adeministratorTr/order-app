@@ -93,6 +93,11 @@ You do not need to worry about adding any kind of authentication for the challen
 we would like an explanation as to what kind of security measures you would have
 incorporated, were this to be an actual project to go into production.
 
+Additionally, there is a **page views** endpoint, that you can get number of visits of a certain page
+to test page-view endpoint works correctly. You can test endpoint by sending GET request with path query. Example for `index` page:
+
+`/api/page-views?path=index`
+
 ### Tests
 We expect a reasonable amount of code coverage along with explanations as to why you included the
 tests you did.
