@@ -3,13 +3,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import { redisClient } from './redis';
-import * as config from './config';
+import * as config from './config/index';
 
 const app = express();
 app.use(bodyParser.json())
 app.use(cors())
-
-app.listen(config.PORT);
 
 app.get('/api/orders', (req, res) => {
   return res.json(config.ORDERS);
@@ -28,3 +26,6 @@ app.get('/api/page-views', async (req, res) => {
     numberOfVisits: numberOfVisits || 0
   });
 });
+
+
+export { app }
