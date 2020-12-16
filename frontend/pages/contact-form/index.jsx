@@ -11,9 +11,22 @@ import { formItem } from './contact-form.module.css'
 export default function ContactForm({ orders }) {
   const [isFormValid, setIsFormValid] = useState(false)
   const [selectedOrderReference, setSelectedOrderReference] = useState(orders[0].reference)
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+
   useEffect(() => {
     pageView(setPageFromUrl(PAGE_URL_LIST.CONTACT_FORM))
   }, [])
+
+  const handleSubmitAction = () => {
+    console.log('Form filled successfully with values below !')
+    console.log('name:', name)
+    console.log('email:', email)
+    console.log('phone:', phone)
+    console.log('message:', message)
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
@@ -23,13 +36,12 @@ export default function ContactForm({ orders }) {
       setIsFormValid(false)
     }
     setIsFormValid(true)
-    // TODO: update form submit action
-    form.checkValidity() && console.log('form filled successfully !')
+    form.checkValidity() && handleSubmitAction()
   }
 
   return (
     <Layout>
-      <Form validated={isFormValid} onSubmit={e => handleFormSubmit(e)}>
+      <Form noValidate validated={isFormValid} onSubmit={e => handleFormSubmit(e)}>
         <Form.Row className={formItem}>
           <Form.Label column xs="12" md="3">Order</Form.Label>
           <Col xs="12" md="9">
@@ -47,28 +59,50 @@ export default function ContactForm({ orders }) {
         <Form.Row className={formItem}>
           <Form.Label column xs="12" md="3">Name</Form.Label>
           <Col xs="12" md="9">
-            <Form.Control required type="text" placeholder="Name" />
+            <Form.Control
+              required
+              type="text"
+              pattern="[a-zA-z]{3,40}"
+              placeholder="Name"
+              onChange={(e) => setName(e.target.value)} />
             <Form.Control.Feedback type="invalid">Enter your name</Form.Control.Feedback>
           </Col>
         </Form.Row>
         <Form.Row className={formItem}>
           <Form.Label column xs="12" md="3">Phone</Form.Label>
           <Col xs="12" md="9">
-            <Form.Control required type="number" placeholder="+491234567890" />
+            <Form.Control
+              required
+              type="tel"
+              pattern="[+]{1}[4]{1}[9]{1}[0-9]{10}"
+              minLength="13"
+              maxLength="13"
+              placeholder="+491234567890"
+              onChange={(e) => setPhone(e.target.value)} />
             <Form.Control.Feedback type="invalid">Enter valid phone number!</Form.Control.Feedback>
           </Col>
         </Form.Row>
         <Form.Row className={formItem}>
           <Form.Label column xs="12" md="3">Email</Form.Label>
           <Col xs="12" md="9">
-            <Form.Control required type="email" placeholder="username@gmail.com" />
+            <Form.Control
+              required
+              type="email"
+              placeholder="username@gmail.com"
+              onChange={(e) => setEmail(e.target.value)} />
             <Form.Control.Feedback type="invalid">Enter valid email!</Form.Control.Feedback>
           </Col>
         </Form.Row>
         <Form.Row className={formItem}>
           <Form.Label column xs="12" md="3">Message</Form.Label>
           <Col xs="12" md="9">
-            <Form.Control required as="textarea" rows={6} placeholder="Your Message" />
+            <Form.Control
+              required
+              as="textarea"
+              rows={6}
+              placeholder="Your Message"
+              minLength="10"
+              onChange={(e) => setMessage(e.target.value)} />
             <Form.Control.Feedback type="invalid">Enter message!</Form.Control.Feedback>
           </Col>
         </Form.Row>
