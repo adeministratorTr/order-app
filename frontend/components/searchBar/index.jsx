@@ -12,8 +12,7 @@ const SearchBar = ({ onChange }) => (
     </InputGroup.Prepend>
     <FormControl
       placeholder="Search"
-      aria-label="Search"
-      aria-describedby="basic-addon1"
+      aria-label="search-bar-input"
     />
   </InputGroup>
 )
