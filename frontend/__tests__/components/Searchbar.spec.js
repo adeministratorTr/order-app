@@ -7,6 +7,8 @@ describe('components/SearchBar tests', () => {
     const { getByLabelText } = render(<SearchBar />)
     const searchBar = getByLabelText('search-bar-input')
     expect(searchBar).toBeDefined()
+    expect(searchBar.value).toBe('')
+    expect(searchBar.placeholder).toBe("Search")
   })
 
   it('should render new value', () => {
