@@ -1,5 +1,3 @@
-import { getOrders } from '../../services/order'
-
 describe('services/order tests', () => {
   it('getOrders should return valid orders with certain properties', async () => {
     const sampleOrders = [
@@ -20,9 +18,11 @@ describe('services/order tests', () => {
       Promise.resolve({ sampleOrders })
     )
     const test = await mockOrdersService()
-    expect(test.sampleOrders[0]).toHaveProperty('reference')
-    expect(test.sampleOrders[0]).toHaveProperty('date')
-    expect(test.sampleOrders[0]).toHaveProperty('delivered')
-    expect(test.sampleOrders[0]).toHaveProperty('cost')
+    test.sampleOrders.map(order => {
+      expect(order).toHaveProperty('reference')
+      expect(order).toHaveProperty('date')
+      expect(order).toHaveProperty('delivered')
+      expect(order).toHaveProperty('cost')
+    })
   })
 })
