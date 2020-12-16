@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 import { Form, Col, Button } from 'react-bootstrap';
 
 import { pageView } from '../../services/page'
+import { getOrders } from '../../services/order'
 import { setPageFromUrl } from '../../utils/url'
 import { PAGE_URL_LIST } from '../../constants/url-list'
 import Layout from '../../components/layout'
 import { formItem } from './contact-form.module.css'
 
-export default function ContactForm() {
+export default function ContactForm({ orders }) {
   const [isFormValid, setIsFormValid] = useState(false)
-
+  const [selectedOrderReference, setSelectedOrderReference] = useState(orders[0].reference)
   useEffect(() => {
     pageView(setPageFromUrl(PAGE_URL_LIST.CONTACT_FORM))
   }, [])
@@ -28,8 +29,21 @@ export default function ContactForm() {
 
   return (
     <Layout>
-      <Form noValidate validated={isFormValid} onSubmit={e => handleFormSubmit(e)}>
-        {/* TODO: Add orders here */}
+      <Form validated={isFormValid} onSubmit={e => handleFormSubmit(e)}>
+        <Form.Row className={formItem}>
+          <Form.Label column xs="12" md="3">Order</Form.Label>
+          <Col xs="12" md="9">
+            <Form.Control
+              as="select"
+              value={selectedOrderReference}
+              onChange={(e) => setSelectedOrderReference(e.target.value)}
+            >
+              {orders.map(({ reference }) =>
+                <option key={reference} value={reference}>{reference}</option>
+              )}
+            </Form.Control>
+          </Col>
+        </Form.Row>
         <Form.Row className={formItem}>
           <Form.Label column xs="12" md="3">Name</Form.Label>
           <Col xs="12" md="9">
@@ -64,4 +78,11 @@ export default function ContactForm() {
       </Form>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const orders = await getOrders()
+  return {
+    props: { orders: orders }
+  }
 }
