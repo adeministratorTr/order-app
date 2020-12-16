@@ -60,7 +60,9 @@ export default function OrderDetail() {
   const renderOrderSearch = () => (
     <Row>
       <Col xs="12" md="8" style={{ marginBottom: '32px' }}>
-        <SearchBar onChange={(e) => setSearchValue(e.target.value)} />
+        <SearchBar
+          placeholder="Enter order reference number here"
+          onChange={(e) => setSearchValue(e.target.value)} />
       </Col>
       <Col xs="12" md={{ span: 3, offset: 1 }} style={{ marginBottom: '32px' }}>
         <Button block onClick={() => handleNextButtonClick()}>Next</Button>

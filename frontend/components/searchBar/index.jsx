@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Search from '../../assets/icons/search'
 
-const SearchBar = ({ onChange }) => (
+const SearchBar = ({ onChange, placeholder = "Search" }) => (
   <InputGroup onChange={e => onChange && onChange(e)}>
     <InputGroup.Prepend>
       <InputGroup.Text>
@@ -11,7 +11,7 @@ const SearchBar = ({ onChange }) => (
       </InputGroup.Text>
     </InputGroup.Prepend>
     <FormControl
-      placeholder="Search"
+      placeholder={placeholder}
       aria-label="search-bar-input"
     />
   </InputGroup>
