@@ -1,7 +1,0 @@
-module.exports = {
-  transform: {
-    '.js': 'jest-esm-transformer',
-    '.mjs': 'jest-esm-transformer'
-  },
-  moduleFileExtensions: ['mjs', 'js']
-};

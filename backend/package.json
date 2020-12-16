@@ -7,7 +7,7 @@
   "scripts": {
     "pretest": "eslint --ext .js,.jsx,.ts,.tsx --fix",
     "start": "nodemon -r esm src/index.mjs",
-    "test": "jest",
+    "test": "jest --forceExit",
     "test:dev": "NODE_ENV=test jest --watch"
   },
   "author": "",
