@@ -114,9 +114,11 @@ export default function ContactForm({ orders }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const orders = await getOrders()
-  return {
-    props: { orders: orders }
-  }
+  return orders
+    ? {
+      props: { orders }
+    }
+    : { props: {} }
 }
