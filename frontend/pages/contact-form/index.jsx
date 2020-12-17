@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Form, Col, Button } from 'react-bootstrap';
+import { Form, Col, Button, Spinner } from 'react-bootstrap';
 
 import { pageView } from '../../services/page'
 import { getOrders } from '../../services/order'
@@ -8,9 +8,11 @@ import { PAGE_URL_LIST } from '../../constants/url-list'
 import Layout from '../../components/layout'
 import { formItem } from './contact-form.module.css'
 
-export default function ContactForm({ orders }) {
+export default function ContactForm() {
   const [isFormValid, setIsFormValid] = useState(false)
-  const [selectedOrderReference, setSelectedOrderReference] = useState(orders[0].reference)
+  const [orders, setOrders] = useState({})
+  const [selectedOrderReference, setSelectedOrderReference] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [email, setEmail] = useState('')
@@ -18,6 +20,11 @@ export default function ContactForm({ orders }) {
 
   useEffect(() => {
     pageView(setPageFromUrl(PAGE_URL_LIST.CONTACT_FORM))
+    setIsLoading(true)
+    getOrders().then(resp => {
+      setOrders(resp)
+      setIsLoading(false)
+    })
   }, [])
 
   const handleSubmitAction = () => {
@@ -41,84 +48,79 @@ export default function ContactForm({ orders }) {
 
   return (
     <Layout>
-      <Form noValidate validated={isFormValid} onSubmit={e => handleFormSubmit(e)}>
-        <Form.Row className={formItem}>
-          <Form.Label column xs="12" md="3">Order</Form.Label>
-          <Col xs="12" md="9">
-            <Form.Control
-              as="select"
-              value={selectedOrderReference}
-              onChange={(e) => setSelectedOrderReference(e.target.value)}
-            >
-              {orders.map(({ reference }) =>
-                <option key={reference} value={reference}>{reference}</option>
-              )}
-            </Form.Control>
-          </Col>
-        </Form.Row>
-        <Form.Row className={formItem}>
-          <Form.Label column xs="12" md="3">Name</Form.Label>
-          <Col xs="12" md="9">
-            <Form.Control
-              required
-              type="text"
-              pattern="[a-zA-z]{3,40}"
-              placeholder="Name"
-              onChange={(e) => setName(e.target.value)} />
-            <Form.Control.Feedback type="invalid">Enter your name</Form.Control.Feedback>
-          </Col>
-        </Form.Row>
-        <Form.Row className={formItem}>
-          <Form.Label column xs="12" md="3">Phone</Form.Label>
-          <Col xs="12" md="9">
-            <Form.Control
-              required
-              type="tel"
-              pattern="[+]{1}[4]{1}[9]{1}[0-9]{10}"
-              minLength="13"
-              maxLength="13"
-              placeholder="+491234567890"
-              onChange={(e) => setPhone(e.target.value)} />
-            <Form.Control.Feedback type="invalid">Enter valid phone number!</Form.Control.Feedback>
-          </Col>
-        </Form.Row>
-        <Form.Row className={formItem}>
-          <Form.Label column xs="12" md="3">Email</Form.Label>
-          <Col xs="12" md="9">
-            <Form.Control
-              required
-              type="email"
-              placeholder="username@gmail.com"
-              onChange={(e) => setEmail(e.target.value)} />
-            <Form.Control.Feedback type="invalid">Enter valid email!</Form.Control.Feedback>
-          </Col>
-        </Form.Row>
-        <Form.Row className={formItem}>
-          <Form.Label column xs="12" md="3">Message</Form.Label>
-          <Col xs="12" md="9">
-            <Form.Control
-              required
-              as="textarea"
-              rows={6}
-              placeholder="Your Message"
-              minLength="10"
-              onChange={(e) => setMessage(e.target.value)} />
-            <Form.Control.Feedback type="invalid">Enter message!</Form.Control.Feedback>
-          </Col>
-        </Form.Row>
-        <Form.Row className={`justify-content-sm-center justify-content-md-end ${formItem}`}>
-          <Button type="submit">Submit</Button>
-        </Form.Row>
-      </Form>
+      {isLoading
+        ? <Spinner animation="border" />
+        :
+        <Form noValidate validated={isFormValid} onSubmit={e => handleFormSubmit(e)}>
+          <Form.Row className={formItem}>
+            <Form.Label column xs="12" md="3">Order</Form.Label>
+            <Col xs="12" md="9">
+              <Form.Control
+                as="select"
+                value={selectedOrderReference}
+                onChange={(e) => setSelectedOrderReference(e.target.value)}
+              >
+                {orders && orders.length > 0 && orders.map(({ reference }) =>
+                  <option key={reference} value={reference}>{reference}</option>
+                )}
+              </Form.Control>
+            </Col>
+          </Form.Row>
+          <Form.Row className={formItem}>
+            <Form.Label column xs="12" md="3">Name</Form.Label>
+            <Col xs="12" md="9">
+              <Form.Control
+                required
+                type="text"
+                pattern="[a-zA-z]{3,40}"
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)} />
+              <Form.Control.Feedback type="invalid">Enter your name</Form.Control.Feedback>
+            </Col>
+          </Form.Row>
+          <Form.Row className={formItem}>
+            <Form.Label column xs="12" md="3">Phone</Form.Label>
+            <Col xs="12" md="9">
+              <Form.Control
+                required
+                type="tel"
+                pattern="[+]{1}[4]{1}[9]{1}[0-9]{10}"
+                minLength="13"
+                maxLength="13"
+                placeholder="+491234567890"
+                onChange={(e) => setPhone(e.target.value)} />
+              <Form.Control.Feedback type="invalid">Enter valid phone number!</Form.Control.Feedback>
+            </Col>
+          </Form.Row>
+          <Form.Row className={formItem}>
+            <Form.Label column xs="12" md="3">Email</Form.Label>
+            <Col xs="12" md="9">
+              <Form.Control
+                required
+                type="email"
+                placeholder="username@gmail.com"
+                onChange={(e) => setEmail(e.target.value)} />
+              <Form.Control.Feedback type="invalid">Enter valid email!</Form.Control.Feedback>
+            </Col>
+          </Form.Row>
+          <Form.Row className={formItem}>
+            <Form.Label column xs="12" md="3">Message</Form.Label>
+            <Col xs="12" md="9">
+              <Form.Control
+                required
+                as="textarea"
+                rows={6}
+                placeholder="Your Message"
+                minLength="10"
+                onChange={(e) => setMessage(e.target.value)} />
+              <Form.Control.Feedback type="invalid">Enter message!</Form.Control.Feedback>
+            </Col>
+          </Form.Row>
+          <Form.Row className={`justify-content-sm-center justify-content-md-end ${formItem}`}>
+            <Button type="submit">Submit</Button>
+          </Form.Row>
+        </Form>
+      }
     </Layout>
   )
-}
-
-export async function getServerSideProps() {
-  const orders = await getOrders()
-  return orders
-    ? {
-      props: { orders }
-    }
-    : { props: {} }
 }
